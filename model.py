@@ -12,10 +12,12 @@ NUM_CLASSES = 2
 EPOCHS = 50
 H, W = 480, 640
 FINETUNE = False
-IMAGE_PATHS = 'train_image'
-MASK_PATHS = 'train_mask'
-VAL_IMAGE_PATH = 'val_image'
-VAL_MASK_PATH = 'val_mask'
+IMAGE_PATHS = 'Face_Dataset/train_image'
+MASK_PATHS = 'Face_Dataset/train_mask'
+VAL_IMAGE_PATH = 'Face_Dataset/val_image'
+VAL_MASK_PATH = 'Face_Dataset/val_mask'
+TEST_IMAGE_PATH = 'Face_Dataset/test_image'
+TEST_MASK_PATH = 'Face_Dataset/test_mask'
 OUTPUT = 'outputs/'
 MODEL = 'model/'
 
@@ -210,22 +212,30 @@ def infer(image_paths):
 if __name__ == '__main__':
 
     image_paths = [os.path.join(os.getcwd(), IMAGE_PATHS,
-                                x) for x in os.listdir(IMAGE_PATHS) if x.endswith('.png')]
-    mask_paths = [os.path.join(os.getcwd(), MASK_PATHS, 'mask-' + os.path.basename(x))
+                                x) for x in os.listdir(IMAGE_PATHS) if x.endswith('.jpg')]
+    mask_paths = [os.path.join(os.getcwd(), MASK_PATHS, os.path.basename(x.replace('jpg', 'png')))
                   for x in image_paths]
+
     val_image_paths = [os.path.join(os.getcwd(), VAL_IMAGE_PATH, x)
-                       for x in os.listdir(VAL_IMAGE_PATH) if x.endswith('.png')]
-    val_mask_paths = [os.path.join(
-        os.getcwd(), VAL_MASK_PATH, 'mask-' + os.path.basename(x)) for x in val_image_paths]
+                       for x in os.listdir(VAL_IMAGE_PATH) if x.endswith('.jpg')]
+    val_mask_paths = [os.path.join(os.getcwd(), VAL_MASK_PATH, os.path.basename(
+        x.replace('jpg', 'png'))) for x in val_image_paths]
+
+    test_image_paths = [os.path.join(os.getcwd(), TEST_IMAGE_PATH, x)
+                        for x in os.listdir(TEST_IMAGE_PATH) if x.endswith('.jpg')]
+    test_mask_paths = [os.path.join(os.getcwd(), TEST_MASK_PATH, os.path.basename(
+        x.replace('jpg', 'png'))) for x in test_image_paths]
 
     indexes = [x for x in range(len(image_paths))]
     random.shuffle(indexes)
     image_paths = [image_paths[index] for index in indexes]
     mask_paths = [mask_paths[index] for index in indexes]
 
-    #infer_paths = ['test_image_modded/' + x for x in os.listdir(
+    # Use this for test
+    # infer_paths = ['test_image_modded/' + x for x in os.listdir(
     #    'test_image_modded') if x.endswith('.jpg')]
-    #print(infer_paths)
-    #infer(infer_paths)
+    # print(infer_paths)
+    # infer(infer_paths)
+    
     print('Training inititated...')
     train(image_paths, mask_paths, val_image_paths, val_mask_paths)
