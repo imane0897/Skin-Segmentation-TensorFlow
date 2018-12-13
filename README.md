@@ -69,8 +69,3 @@ def inference(image_tensor, is_training):
     return pred
 ```
 As can be seen, the model has 9 convolutional layers and calculates upto 512 feature maps. The architecture is simple to understand, the focus here is on readability.
-
-# TODOs:
-1. Add model graph for visualization.
-2. Comment code for further readability.
-3. Extend and explain the input pipeline.
