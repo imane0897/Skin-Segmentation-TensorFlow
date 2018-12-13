@@ -82,7 +82,7 @@ Val. Loss: 0.38619453
 Val. iou: 0.5982049
 ```
 
-Training result model is saved in `model` directory. 
+Training result model is saved in `model.zip` . Available in [Google Drive](https://drive.google.com/open?id=1XiyjcniyzKWp2j9FJKX2ofTDpW9SnOIp) cause it's over 100MB and git push is limited. 
 
 Test result is given as follow.
 
